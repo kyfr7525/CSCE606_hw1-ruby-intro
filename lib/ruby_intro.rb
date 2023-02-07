@@ -3,27 +3,6 @@
 # Part 1
 
 
-# ------------------------------------------------------------------------------------------------------------------------------------------------------
-# Although Ruby supports looping constructs like 'for' and 'while', consider using block syntax with each for a more idiomatic use of Ruby
-
-# # 0. Define a method `sum(array)` that takes an array of integers as an argument and returns the sum of its elements. 
-#   For an empty array it should return zero.  Run associated tests via:  `$ rspec -e '#sum ' spec/part1_spec.rb` 
-#   (Make sure you are in the correct directory: `cd assignment` and rspec is installed)
-# ------------------------------------------------------------------------------------------------------------------------------------------------------
-# # 0. Define a method `max_2_sum(array)` which takes an array of integers as an argument and returns the sum of its two largest elements. 
-#   For an empty array it should return zero. For an array with just one element, it should return that element 
-#   (Consider if the two largest elements are the same value as well). Run associated tests via:  `$ rspec -e '#max_2_sum' spec/part1_spec.rb`
-# ------------------------------------------------------------------------------------------------------------------------------------------------------
-# # 0. Define a method `sum_to_n?(array, n)` that takes an array of integers and an additional integer, n, as arguments and returns true 
-#   if any two elements in the array of integers sum to n. `sum_to_n?([], n)` should return false for any value of n, by definition. 
-#   Run associated tests via:  `$ rspec -e '#sum_to_n' spec/part1_spec.rb` 
-# ------------------------------------------------------------------------------------------------------------------------------------------------------
-# # You can check your progress on all of the above by running `$ rspec spec/part1_spec.rb`.
-
-# ------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-
 def sum(arr)
       # if arr.length() == 0 
       #   return 0 
@@ -39,10 +18,6 @@ def sum(arr)
 end
   
 #####################################################################################################################################################################
-# Define a method `max_2_sum(array)` which takes an array of integers as an argument and returns the sum of its two largest elements. 
-# For an empty array it should return zero. For an array with just one element, it should return that element 
-# (Consider if the two largest elements are the same value as well). Run associated tests via:  `$ rspec -e '#max_2_sum' spec/part1_spec.rb`
-
 
 def max_2_sum(arr)
   # one = arr.min()
@@ -77,11 +52,6 @@ end
 
 #####################################################################################################################################################################
 
-# 0. Define a method `sum_to_n?(array, n)` that takes an array of integers and an additional integer, n, as arguments and 
-# returns true if any two elements in the array of integers sum to n. `sum_to_n?([], n)` should return false for any value of n, by definition. 
-# Run associated tests via:  `$ rspec -e '#sum_to_n' spec/part1_spec.rb` 
-
-
 def sum_to_n? arr, n
   tempsum = 0
   
@@ -105,27 +75,106 @@ end
 #####################################################################################################################################################################
 # # Part 2
 
-# def hello(name)
-#   # YOUR CODE HERE
-# end
+def hello(name)
+  return "Hello, " + name
+end
 
 
 #####################################################################################################################################################################
-# def starts_with_consonant? s
-#   # YOUR CODE HERE
-# end
+
+def starts_with_consonant? s
+  # YOUR CODE HERE
+  
+  if s.empty?
+    return false
+  end
+  
+  if s[0] =~ /[aeiouAEIOU]/ 
+    return false
+  elsif s[0] =~ /[^a-zA-Z]/
+    return false
+  else 
+    return true
+  end
+
+  # if s[0] =~ /[a-zA-Z_]/
+  #   new_str = s.downcase # convert the original string, s, to all lowercase
+  #   vowels = ["a","e","i","o","u"]
+    
+    
+  #   vowels.each do |vow|
+  #     if vow == new_str[0]
+  #       return false
+  #     end
+  #   end
+    
+  #   return true
+    
+  # else
+  #   return false
+  # end
+end
 
 
 #####################################################################################################################################################################
-# def binary_multiple_of_4? s
-#   # YOUR CODE HERE
-# end
+
+def binary_multiple_of_4? s
+  if s =~ /[^0-9]/ #/[a-zA-Z]/
+    return false # this is because we want to have a pure binary number. Any characters means it's not an int
+  elsif (s.to_i(2) % 4 == 0) && !s.empty?
+    return true
+  else
+    return false
+  end
+end
 
 
 #####################################################################################################################################################################
 #####################################################################################################################################################################
 # # Part 3
 
-# class BookInStock
-# # YOUR CODE HERE
-# end
+
+# Define a class `BookInStock` which represents a book with an ISBN number, `isbn`, and price of the book as a floating-point number, `price`, as attributes. 
+# Run associated tests via:  `$ rspec -e 'getters and setters' spec/part3_spec.rb` (Make sure you are in the correct directory: `cd assignment`)
+
+# The constructor should accept the ISBN number (a string, since in real life ISBN numbers can begin with zero and can include hyphens) as the first argument 
+# and price as second argument, and should raise `ArgumentError` (one of Ruby's built-in exception types) if the ISBN number is the empty string or if the 
+# price is less than or equal to zero.  Include the proper getters and setters for these attributes. Run associated tests via:  `$ rspec -e 'constructor' spec/part3_spec.rb`
+
+# Include a method `price_as_string` that returns the price of the book formatted with a leading dollar sign and two decimal places, that is, a price of 20 should format 
+# as `$20.00` and a price of 33.8 should format as `$33.80`. Check out formatted string methods in Ruby. Run associated tests via:  `$ rspec -e '#price_as_string' spec/part3_spec.rb`
+
+# You can check your progress on all of the above by running `rspec spec/part3_spec.rb`.
+
+
+class BookInStock
+  def initialize(isbn, price) # constructor that takes in ISBN number and price; same as initialize?
+    if (isbn == "" or price <= 0.0)
+      raise ArgumentError, "Either the ISBN number is empty or the price is <= to 0!"
+    end
+    @isbn = isbn
+    @price = price.to_f
+  end
+
+  def isbn #instance method--like a getter? based on https://canvas.tamu.edu/courses/206251/files/51082386?module_item_id=7192309
+    @isbn
+  end
+  
+  def isbn=(new_isbn) # setter
+    @isbn = new_isbn
+  end
+  
+  def price
+    @price
+  end
+  
+  def price=(new_price)
+    @price = new_price
+  end
+  
+  def price_as_string # string formatting: https://www.rubyguides.com/2012/01/ruby-string-formatting/
+    # return format("$%0.2f", @price)
+    return "$%0.2f" % [@price]
+    # return "$#{@price}"
+  end
+end
